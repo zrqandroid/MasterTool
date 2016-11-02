@@ -20,47 +20,39 @@ package com.maowubian.tools;
  */
 public class StorageUtils {
 
-    private static final long UNIT=1024;
-    private static final String B="B";
-    private static final String KB="KB";
-    private static final String MB="MB";
-    private static final String GB="G";
+    private static final long UNIT = 1024;
 
     /**
      * 将内存大小转换成带相应单位的值
+     *
      * @param size
      * @return
      */
-    public static String convertStorage(long size) {
+    public static String formatSize(long size,int decimalCount) {
 
-        if (size>=UNIT){        //B
-
-
-        }else if (size>=UNIT<<8){//KB
-
-        }else if (size>=UNIT<<16){//MB
-
-        }else if (size>=UNIT<<24){//G
-
-        }else {
-            return size+" B";
+        double l;
+        String s = "%." + decimalCount + "f";
+        if (size >= UNIT << 16) {              //G
+            l = size * 1.0 / (UNIT << 16);
+            return String.format(s+" GB", l);
+        } else if (size >= UNIT << 8) {        //MB
+            l = size * 1.0 / (UNIT << 8);
+            return String.format(s+" MB", l);
+        } else if (size >= UNIT) {             //KB
+            l = size * 1.0 / UNIT;
+            return String.format(s+" KB", l);
+        } else if (size > 0) {                 //B
+            l = size;
+            return String.format("%.0f B", l);
+        } else {
+            return "The size is less than zero ";
         }
 
-        if (size >= gb) {
-            return String.format("%.1f GB", (float) size / gb);
-        } else if (size >= mb) {
-            float f = (float) size / mb;
-            return String.format(f > 100 ? "%.0f MB" : "%.1f MB", f);
-        } else if (size >= kb) {
-            float f = (float) size / kb;
-            return String.format(f > 100 ? "%.0f KB" : "%.1f KB", f);
-        } else
-            return String.format("%d B", size);
     }
 
-
-
-
+    public static String formatSize(long size){
+       return formatSize(size,2);
+    }
 
 
 }
