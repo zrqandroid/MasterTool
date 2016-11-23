@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <declare-styleable name="SlidingScaleTitleView">
+        <attr name="text_color" format="color" />
+        <attr name="text_size" format="dimension" />
+        <attr name="select_text_scale" format="float" />
+        <attr name="un_select_text_alpha" format="float" />
+    </declare-styleable>
 </resources>
