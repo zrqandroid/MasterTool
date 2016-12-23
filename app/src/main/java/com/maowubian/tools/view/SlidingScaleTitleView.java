@@ -57,6 +57,24 @@ public class SlidingScaleTitleView extends HorizontalScrollView {
 
     private static final int VISIBLE_TITLE_COUNT = 3;
 
+    private int oldPosiOffsetPixels = 0;
+
+    public interface OnScrollChangeListener {
+
+        void onPageScrolled(int position, float positionOffset, int positionOffsetPixels);
+
+        void onPageSelected(int position);
+
+        void onPageScrollStateChanged(int state);
+    }
+
+    private OnScrollChangeListener onScrollChangeListener;
+
+    public void setOnScrollChangeListener(OnScrollChangeListener onScrollChangeListener) {
+
+        this.onScrollChangeListener = onScrollChangeListener;
+
+    }
 
     public SlidingScaleTitleView(Context context) {
         super(context);
@@ -156,17 +174,20 @@ public class SlidingScaleTitleView extends HorizontalScrollView {
 
     }
 
-    private int oldPosiOffsetPixels = 0;
+
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            if (onScrollChangeListener != null) {
+                onScrollChangeListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
 
             if (positionOffsetPixels != 0) {
-                float alphaX = 1 -(1-textScale)*positionOffset;
-                float alphaY = textScale + (1-textScale)*positionOffset;
-                if (positionOffsetPixels - oldPosiOffsetPixels > 10) {
-                    float i = textScale - (textScale-1)*positionOffset;
-                    float j = textScale +(textScale-1)*positionOffset;
+                float alphaX = 1 - (1 - textAlpha) * positionOffset;
+                float alphaY = textAlpha + (1 - textAlpha) * positionOffset;
+                if (positionOffsetPixels - oldPosiOffsetPixels > 5) {
+                    float i = textScale - (textScale - 1) * positionOffset;
+                    float j = 1 + (textScale - 1) * positionOffset;
                     View behind = contentLayout.getChildAt(position + VISIBLE_TITLE_COUNT);
                     View self = contentLayout.getChildAt(position + VISIBLE_TITLE_COUNT - 1);
                     self.setScaleX(i);
@@ -176,9 +197,9 @@ public class SlidingScaleTitleView extends HorizontalScrollView {
                     behind.setScaleY(j);
                     behind.setAlpha(alphaY);
 
-                } else if (positionOffsetPixels - oldPosiOffsetPixels < -10) {
-                    float i = 1 + (textScale - 1) *positionOffset;
-                    float j = textScale - (1 - positionOffset) / 4;
+                } else if (positionOffsetPixels - oldPosiOffsetPixels < -5) {
+                    float i = 1 + (textScale - 1) * (1 - positionOffset);
+                    float j = textScale - (textScale - 1) * (1 - positionOffset);
                     View front = contentLayout.getChildAt(position + VISIBLE_TITLE_COUNT - 1);
                     front.setScaleX(i);
                     front.setScaleY(i);
@@ -196,11 +217,17 @@ public class SlidingScaleTitleView extends HorizontalScrollView {
 
         @Override
         public void onPageSelected(int position) {
+            if (onScrollChangeListener != null) {
+                onScrollChangeListener.onPageSelected(position);
+            }
 
         }
 
         @Override
         public void onPageScrollStateChanged(int state) {
+            if (onScrollChangeListener != null) {
+                onScrollChangeListener.onPageScrollStateChanged(state);
+            }
 
         }
     };
