@@ -1,4 +1,4 @@
-package com.maowubian.tools;
+package com.zhuruqiao.baseutils.image;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

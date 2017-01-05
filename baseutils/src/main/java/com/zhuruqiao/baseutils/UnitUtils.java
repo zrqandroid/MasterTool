@@ -1,4 +1,4 @@
-package com.maowubian.tools;
+package com.zhuruqiao.baseutils;
 
 import android.content.Context;
 import android.util.TypedValue;

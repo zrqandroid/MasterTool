@@ -17,18 +17,24 @@ import okhttp3.Route;
 
 public class NetWork {
 
-    private OkHttpClient getClient(){
+    private static final int CONNECT_TIME_OUT = 30;
+
+    private static final int READ_TIME_OUT = 60;
+
+    private static final int WRITE_TIME_OUT = 60;
+
+    private OkHttpClient getClient() {
 
         return new OkHttpClient.Builder()
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .sslSocketFactory(OkHttpFactory.getSocketFactory(), OkHttpFactory.getX509TrustManager())
+                .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)//设置连接超时
+                .readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)//设置读取超时
+                .writeTimeout(WRITE_TIME_OUT, TimeUnit.SECONDS)//设置写入超时
+                .sslSocketFactory(OkHttpFactory.getSocketFactory())
                 .hostnameVerifier(OkHttpFactory.getHostNameVerifier())
-                .followRedirects(true)
+                .followRedirects(true)//允许重定向
                 .retryOnConnectionFailure(true)
                 .addNetworkInterceptor(new UsualRequestInterceptor())
-                .cache(new Cache(httpCacheDirectory, httpCacheSize))
+                .cache(new Cache(httpCacheDirectory, httpCacheSize))//设置缓存
                 .authenticator(new Authenticator() {
                     @Override
                     public Request authenticate(Route route, Response response) throws IOException {
