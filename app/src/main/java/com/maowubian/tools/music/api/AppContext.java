@@ -1,4 +1,4 @@
-package com.maowubian.tools;
+package com.maowubian.tools.music.api;
 
 import android.app.Application;
 

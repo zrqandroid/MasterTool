@@ -15,7 +15,7 @@ import okhttp3.Route;
  * e-mail:563325724@qq.com
  */
 
-public class NetWork {
+public class NetWorkComponent {
 
     private static final int CONNECT_TIME_OUT = 30;
 

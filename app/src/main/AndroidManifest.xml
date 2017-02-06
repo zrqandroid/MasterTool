@@ -3,13 +3,18 @@
     package="com.maowubian.tools">
 
     <application
-        android:name=".AppContext"
+        android:name=".music.api.AppContext"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity
+            android:name=".music.component.splash.ui.Splash"
+
+            android:screenOrientation="portrait"
+
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,15 +22,10 @@
             </intent-filter>
         </activity>
 
-        <receiver
-            android:name=".MyReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="XXXXXXXX" />
-            </intent-filter>
-        </receiver>
+        <activity
+            android:name=".music.component.home.MainActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".view.Main2Activity"></activity>
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package com.zhuruqiao.component.base;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Build;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 
 /**
  * Created by zhuruqiao on 2017/1/6.
@@ -21,8 +23,18 @@ public abstract class BaseActivity<ViewDBinding extends ViewDataBinding> extends
 
     public ViewDBinding mDataBinding;
 
+
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //全屏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        } else {
+            //非全屏
+        }
+
         super.onCreate(savedInstanceState);
         initActionBar();
         this.mContext = this;
@@ -31,14 +43,17 @@ public abstract class BaseActivity<ViewDBinding extends ViewDataBinding> extends
         }
         initView();
         setListener();
+        init();
 
     }
+
+    protected abstract void init();
 
     private void initActionBar() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
             ActionBar actionBar = getActionBar();
-            if (actionBar!=null){
-              actionBar.hide();
+            if (actionBar != null) {
+                actionBar.hide();
             }
         }
 
@@ -77,4 +92,8 @@ public abstract class BaseActivity<ViewDBinding extends ViewDataBinding> extends
     public View getBackButton() {
         return null;
     }
+
+
+
+
 }
