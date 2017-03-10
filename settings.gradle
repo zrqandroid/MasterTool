@@ -1,1 +1,1 @@
-include ':app', ':network', ':baseutils', ':component', ':playservice'
+include ':app', ':network', ':baseutils', ':component', ':playservice', ':frame'

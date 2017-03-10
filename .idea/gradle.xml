@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/baseutils" />
             <option value="$PROJECT_DIR$/component" />
+            <option value="$PROJECT_DIR$/frame" />
             <option value="$PROJECT_DIR$/network" />
             <option value="$PROJECT_DIR$/playservice" />
           </set>
